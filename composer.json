@@ -1,0 +1,12 @@
+{
+	"name": "simplyadmire/ease",
+	"type": "typo3-flow-package",
+	"require": {
+		"typo3/flow": "*"
+	},
+	"autoload": {
+		"psr-0": {
+			"SimplyAdmire\\Ease": "Classes"
+		}
+	}
+}

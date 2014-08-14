@@ -1,0 +1,23 @@
+-
+  name:  'Node Render Service'
+  uriPattern: 'render/nodes/<NodeRenderSubRoutes>'
+  defaults:
+    '@package':    'SimplyAdmire.Ease'
+    '@controller': 'Render\Nodes'
+    '@format': 'html'
+  subRoutes:
+    'NodeRenderSubRoutes':
+      package: 'SimplyAdmire.Ease'
+      suffix:  'NodeRenderService'
+
+-
+  name:  'Node Service'
+  uriPattern: 'nodes/<NodeServiceSubRoutes>'
+  defaults:
+    '@package':    'SimplyAdmire.Ease'
+    '@controller': 'Nodes'
+    '@format': 'html'
+  subRoutes:
+    'NodeServiceSubRoutes':
+      package: 'SimplyAdmire.Ease'
+      suffix:  'NodeService'

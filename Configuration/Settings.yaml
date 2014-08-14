@@ -1,0 +1,12 @@
+TYPO3:
+  Flow:
+    security:
+      firewall:
+        rejectAll: FALSE
+
+#        filters:
+#          -
+#            patternType:  'SimplyAdmire\Ease\Security\RequestPattern\ApiTokenRequestPattern'
+#            patternValue:
+#              uriPattern: '/rest/.*'
+#            interceptor:  AccessDeny
