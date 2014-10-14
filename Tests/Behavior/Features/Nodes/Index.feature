@@ -9,5 +9,5 @@ Feature:
   @fixtures
   Scenario:
     Given I accept "application/json"
-    And I send a "GET" request to "/ease/nodes"
+    And I send a "GET" request to "ease/nodes"
     Then the response status code should be 200

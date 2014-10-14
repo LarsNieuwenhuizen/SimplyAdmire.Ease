@@ -46,7 +46,11 @@ class FeatureContext extends MinkContext {
 	 * @When /^I send a "([^"]*)" request to "([^"]*)"$/
 	 */
 	public function iSendARequestToUri($requestMethod, $uri) {
-		$this->getSession()->getDriver()->visit($requestMethod, $uri);
+
+		$this->getSession()->getDriver()->getClient()->request(
+			$requestMethod,
+			$this->locatePath('/') . $uri
+		);
 	}
 
 }
