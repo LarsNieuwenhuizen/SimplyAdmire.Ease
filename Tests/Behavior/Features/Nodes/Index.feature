@@ -11,3 +11,16 @@ Feature:
     Given I accept "application/json"
     And I send a "GET" request to "ease/nodes"
     Then the response status code should be 200
+    And the response is JSON
+    And the response should contain 1 node
+    And the node should have property "@path" with value "/"
+
+  @fixtures
+  Scenario:
+    Given I accept "text/html"
+    And I send a "GET" request to "ease/nodes"
+    Then the response status code should be 200
+    And the response is HTML
+    And the response should contain 1 node
+    And the node should have property "@path" with value "/"
+

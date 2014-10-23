@@ -24,10 +24,8 @@ class NodeRoutePartHandler extends DynamicRoutePart {
 			return FALSE;
 		}
 
-		$options = $this->getOptions();
-		$context = $this->contextFactory->create(isset($options['context']) ? $options['context'] : array());
-
 		try {
+			$context = $this->buildContext();
 			$node = $context->getNodeByIdentifier($requestPath);
 
 			if ($node instanceof NodeInterface) {
@@ -39,6 +37,7 @@ class NodeRoutePartHandler extends DynamicRoutePart {
 				$this->value = $context->getRootNode()->getIdentifier();
 				return TRUE;
 			}
+
 		} catch (\Exception $exception) {}
 
 		return FALSE;
@@ -57,4 +56,9 @@ class NodeRoutePartHandler extends DynamicRoutePart {
 		return TRUE;
 	}
 
+
+	public function buildContext() {
+		$options = $this->getOptions();
+		return $this->contextFactory->create(isset($options['context']) ? $options['context'] : array());
+	}
 }

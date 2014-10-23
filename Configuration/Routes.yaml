@@ -16,7 +16,6 @@
   defaults:
     '@package':    'SimplyAdmire.Ease'
     '@controller': 'Nodes'
-    '@format': 'html'
   subRoutes:
     'NodeServiceSubRoutes':
       package: 'SimplyAdmire.Ease'

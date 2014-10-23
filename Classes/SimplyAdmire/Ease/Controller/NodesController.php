@@ -3,19 +3,27 @@ namespace SimplyAdmire\Ease\Controller;
 
 use SimplyAdmire\CR\Domain\Repository\NodeReadRepository;
 use SimplyAdmire\Ease\View\NodeJsonView;
-use SimplyAdmire\Ease\View\TypoScriptView;
+use TYPO3\Eel\FlowQuery\FlowQuery;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Mvc\Controller\ActionController;
 use TYPO3\TYPO3CR\Domain\Model\NodeInterface;
+use TYPO3\TYPO3CR\Domain\Service\ContextFactoryInterface;
 
 class NodesController extends ActionController {
+
+	/**
+	 * @Flow\Inject
+	 * @var ContextFactoryInterface
+	 */
+	protected $contextFactory;
+
 
 	/**
 	 * @var array
 	 */
 	protected $viewFormatToObjectNameMap = array(
 		'html' => 'TYPO3\Fluid\View\TemplateView',
-		'json' => 'SimplyAdmire\View\NodeJsonView'
+		'json' => 'SimplyAdmire\Ease\View\NodeJsonView'
 	);
 
 	/**
@@ -47,12 +55,30 @@ class NodesController extends ActionController {
 	 * @param NodeInterface $node
 	 */
 	public function showAction(NodeInterface $node) {
+		$flowQuery = new FlowQuery(array($node));
+
 		if ($this->view instanceof NodeJsonView) {
 			$this->view->assignNode($node);
-		} elseif ($this->view instanceof TypoScriptView) {
-			$this->view->assign('value', $node->getNode('main/node-53ea1fc2d747a'));
 		} else {
-			$this->view->assign('node', $node);
+			$this->view->assignMultiple(array(
+				'node' => $node,
+				'closestDocumentNode' => $flowQuery->closest('[instanceof TYPO3.Neos:Document]')->get(0)
+			));
 		}
+	}
+
+	/**
+	 * @param string $nodeIdentifier
+	 */
+	public function createAction($nodeIdentifier) {
+		// TODO: Move code to command validation code
+		$context = $this->contextFactory->create();
+		$existingNode = $context->getNodeByIdentifier($nodeIdentifier);
+		if ($existingNode !== NULL) {
+			$this->throwStatus(409);
+		}
+
+		print_r($this->request->getHttpRequest()->getContent());
+		die();
 	}
 }

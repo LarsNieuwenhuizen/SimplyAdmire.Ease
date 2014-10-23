@@ -53,9 +53,39 @@ class NodeJsonView extends JsonView {
 	 * @return array Object structure as an array
 	 */
 	protected function transformObject($object, array $configuration) {
-		$transformedObject = parent::transformObject($object, $configuration);
+		$transformedObject = array();
 
-		\TYPO3\Flow\var_dump($transformedObject);
+		foreach (parent::transformObject($object, $configuration) as $name => $value) {
+			if ($name === 'properties') {
+				foreach ($value as $propertyName => $propertyValue) {
+					$transformedObject[$propertyName] = $propertyValue;
+				}
+			} else {
+				$transformedObject['@' . $name] = $value;
+			}
+		}
+
+		if ($object instanceof NodeInterface) {
+			$transformedObject['_links'] = [
+				'self' => ['href' => $this->getNodeUri($object)],
+				'nodeType' => ['name' => $object->getNodeType()->getName()],
+				'childNodes' => []
+			];
+			/** @var NodeInterface $childNode */
+			foreach ($object->getChildNodes() as $childNode) {
+				$transformedObject['_links']['childNodes'][] = ['name' => $childNode->getName(), 'href' => $this->getNodeUri($childNode)];
+			}
+		}
+
 		return $transformedObject;
+	}
+
+	/**
+	 * @param NodeInterface $node
+	 * @return string
+	 * @throws \TYPO3\Flow\Mvc\Routing\Exception\MissingActionNameException
+	 */
+	protected function getNodeUri(NodeInterface $node) {
+		return $this->controllerContext->getUriBuilder()->reset()->setCreateAbsoluteUri(TRUE)->uriFor('show', array('node' => $node), 'Nodes');
 	}
 }

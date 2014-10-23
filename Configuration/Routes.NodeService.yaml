@@ -14,7 +14,7 @@
 
 -
   name: 'show node'
-  uriPattern: '{node}(.{@format})'
+  uriPattern: '{node}'
   routeParts:
     'node':
       handler: 'SimplyAdmire\Ease\Routing\NodeRoutePartHandler'
@@ -22,3 +22,9 @@
     '@action': 'show'
   httpMethods: ['GET']
 
+-
+  name: 'create node'
+  uriPattern: '{nodeIdentifier}'
+  defaults:
+    '@action': 'create'
+  httpMethods: ['POST']
