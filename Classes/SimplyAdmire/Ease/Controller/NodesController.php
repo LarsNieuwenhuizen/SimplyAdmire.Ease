@@ -17,7 +17,6 @@ class NodesController extends ActionController {
 	 */
 	protected $contextFactory;
 
-
 	/**
 	 * @var array
 	 */
@@ -35,19 +34,13 @@ class NodesController extends ActionController {
 	);
 
 	/**
-	 * @Flow\Inject
-	 * @var NodeReadRepository
-	 */
-	protected $nodeReadRepository;
-
-	/**
 	 *
 	 */
 	public function indexAction() {
 		if ($this->view instanceof NodeJsonView) {
-			$this->view->assignNodes(array($this->nodeReadRepository->getRootNode()));
+			$this->view->assignNodes(array($this->contextFactory->create()->getRootNode()));
 		} else {
-			$this->view->assign('nodes', array($this->nodeReadRepository->getRootNode()));
+			$this->view->assign('nodes', array($this->contextFactory->create()->getRootNode()));
 		}
 	}
 
