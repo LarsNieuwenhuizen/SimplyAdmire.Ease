@@ -1,10 +1,8 @@
-privilegeTargets:
-  TYPO3\Flow\Security\Authorization\Privilege\Method\MethodPrivilege:
-    Ease_Controllers:
-      matcher: 'method(SimplyAdmire\Ease\Controller\.*Controller->.*Action())'
-roles:
-  'TYPO3.Flow:Everybody':
-    privileges:
-      -
-        privilegeTarget: Ease_Controllers
-        permission: GRANT
+resources:
+  methods:
+    Ease_Controllers: 'method(SimplyAdmire\Ease\Controller\.*Controller->.*Action())'
+
+acls:
+  Everybody:
+    methods:
+      Ease_Controllers: GRANT
