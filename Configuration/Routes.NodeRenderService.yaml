@@ -1,10 +1,11 @@
 -
   name: 'show node'
-  uriPattern: '{node}(.{@format})'
+  uriPattern: '({mainLanguage}/){node}'
   routeParts:
     'node':
       handler: 'SimplyAdmire\Ease\Routing\NodeRoutePartHandler'
   defaults:
     '@action': 'render'
+    'mainLanguage': ''
   httpMethods: ['GET']
 
